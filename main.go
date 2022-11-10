@@ -4,42 +4,52 @@ import (
 	"fmt"
 )
 
-func sparen(kosten float64, spaargeld float64, tijd float64) float64 {
-	return (kosten + spaargeld) / tijd
-}
-
 func main() {
 	for {
-		var vasteKosten float64
-		var kosten float64
 		var spaargeld float64
-		var tijd float64
-		var verdien float64
-		var anderverdien float64
-		fmt.Print("\nHoeveel verdien je maandelijks: €")
-		fmt.Scanln(&verdien)
-		fmt.Print("Hoeveel verdien je extra wat niet maandelijks is: €")
-		fmt.Scanln(&anderverdien)
-		fmt.Print("Leefkosten per maand: €")
-		fmt.Scanln(&vasteKosten)
-		fmt.Print("Niet maandelijkse verplichte kosten: €")
-		fmt.Scanln(&kosten)
-		temp := kosten
-		fmt.Print("Geplande kosten van dingen die je wil kopen: €")
-		fmt.Scanln(&kosten)
-		kosten += temp
-		fmt.Print("Geld dat je wil sparen: €")
+		var gepland float64
+		var leefgeld float64
+		var maandloon float64
+		var rechtstreeks float64
+		var jaar float64
+		var maand float64
+		var maandsparen float64
+		fmt.Print("\n\nHoeveel spaargeld wil je (+++): €")
 		fmt.Scanln(&spaargeld)
-		fmt.Print("Hoeveel jaar: ")
-		fmt.Scanln(&tijd)
-		jaar := 12 * tijd
-		fmt.Print("Hoeveel maand: ")
-		fmt.Scanln(&tijd)
-		tijd += jaar
-		verdien += (anderverdien / tijd)
-		maandelijks := sparen(kosten, spaargeld, tijd)
-		fmt.Print("Maandelijks heb je €", vasteKosten, " aan leefkosten")
-		fmt.Print("\nMaandelijks moet je ", maandelijks, " opzij zetten voor geplande aankopen en spaargeld")
-		fmt.Print("\nMaandelijks heb je ", verdien-maandelijks-vasteKosten, " over")
+		fmt.Print("Geplande aankopen (++): €")
+		fmt.Scanln(&gepland)
+		fmt.Print("Hoeveel leefgeld per maand heb je nodig: €")
+		fmt.Scanln(&leefgeld)
+		fmt.Print("Bedrag dat je rechtstreeks op je spaarrekening zet: €")
+		fmt.Scanln(&rechtstreeks)
+		fmt.Print("Maandelijkse verdienste: €")
+		fmt.Scanln(&maandloon)
+		fmt.Print("Aantal jaren: ")
+		fmt.Scanln(&jaar)
+		fmt.Print("Aantal maanden: ")
+		fmt.Scanln(&maand)
+		maand += (12 * jaar)
+		maandsparen = ((spaargeld + gepland - rechtstreeks) / maand)
+		fmt.Print("\nMaandelijks moet je €")
+		fmt.Printf("%.2f", maandsparen)
+		fmt.Print(" sparen")
+		if spaargeld > gepland {
+			fmt.Print("\nWaarvan €")
+			fmt.Printf("%.2f", gepland/maand)
+			fmt.Print(" voor geplande aankopen")
+			fmt.Print("\nWaarvan €")
+			fmt.Printf("%.2f", (spaargeld-rechtstreeks)/maand)
+			fmt.Print(" voor spaargeld")
+		} else {
+			fmt.Print("\nWaarvan €")
+			fmt.Printf("%.2f", ((gepland - rechtstreeks) / maand))
+			fmt.Print(" voor geplande aankopen")
+			fmt.Print("\nWaarvan €")
+			fmt.Printf("%.2f", (spaargeld / maand))
+			fmt.Print(" voor spaargeld")
+		}
+		fmt.Print("\nJe hebt €")
+		fmt.Printf("%.2f", maandloon-leefgeld-maandsparen)
+		fmt.Print(" over voor maandelijkse fun")
 	}
 }
